@@ -12,6 +12,7 @@ const createProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
     try {
+        console.log(req.user);
         const product = await Product.find({ price: { $gt: 20 } })
 
     } catch (error) {

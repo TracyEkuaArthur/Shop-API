@@ -6,7 +6,7 @@ const {
   getSingleProduct,
   updateProduct,
 } = require("../controller/products.controller");
-
+const { verifyToken } = require("../middlewares/verifyToken");
 
 // const productRouter = Router();
 // productRouter.route("/").get(getAllProducts).post(createProduct);
@@ -16,7 +16,7 @@ const {
 //   .patch(updateProduct)
 //   .delete(deleteProduct);
 
-router.get("/", getAllProducts);
+router.get("/", verifyToken, getAllProducts);
 router.get("/:productId", getSingleProduct);
 router.post("/", createProduct);
 router.patch("/:productId", updateProduct);

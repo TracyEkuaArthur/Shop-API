@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const { loginSchema, registerSchema } = require("../utlis/validation");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   const { value, error } = registerSchema.validate(req.body);
@@ -42,10 +43,23 @@ const login = async (req, res) => {
 
   // if password do not match
   if (!isMatch) {
-    return res.status(400).json({ msg: "Invalid credentials" });
+    return res.status(400).json({ msg: "Invalid credential5" });
   }
 
-  res.status(200).json(user);
+  // generate token
+  const token = jwt.sign({
+    id: user._id, 
+    username: user.username,
+  },
+    // secret key used to encode the playload
+   "secret",
+  // options
+  {
+    expiresIn: "1h",
+  
+  } )
+
+  res.status(200).json(token);
 };
 
 module.exports = {
